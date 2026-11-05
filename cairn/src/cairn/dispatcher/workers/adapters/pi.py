@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import json
-from pathlib import PurePosixPath
+from pathlib import Path, PurePosixPath
 from typing import Any
 
 from cairn.dispatcher.config import WorkerConfig
@@ -190,7 +190,7 @@ class PiDriver(WorkerDriver):
 
     @staticmethod
     def _agent_dir(worker: WorkerConfig) -> str:
-        return str(PurePosixPath("/tmp/cairn-pi") / worker.name)
+        return str(Path.home() / ".local/share/cairn/pi" / worker.name)
 
     @staticmethod
     def _session_dir(worker: WorkerConfig) -> str:
