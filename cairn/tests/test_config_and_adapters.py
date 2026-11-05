@@ -111,6 +111,24 @@ def test_pi_driver_models_json_and_execute_argv_include_context_window_and_tools
     assert result.argv[-2:] == ["-p", "prompt"]
 
 
+def test_pi_local_driver_passes_explicit_provider_and_model() -> None:
+    worker = WorkerConfig.model_validate(
+        {
+            "name": "qwen-local",
+            "type": "pi",
+            "task_types": ["reason"],
+            "max_running": 1,
+            "priority": 0,
+            "env": {
+                "PI_PROVIDER": "local-llama",
+                "PI_MODEL": "qwen-local",
+            },
+        }
+    )
+    argv = PiDriver(local=True).build_execute(worker, "prompt", None).argv
+    assert argv[argv.index("--provider") + 1] == "local-llama"
+    assert argv[argv.index("--model") + 1] == "qwen-local"
+
 def test_codex_driver_execute_argv_passes_model_endpoint_and_prompt() -> None:
     worker = WorkerConfig.model_validate(
         {
