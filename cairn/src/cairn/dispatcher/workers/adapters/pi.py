@@ -110,6 +110,12 @@ class PiDriver(WorkerDriver):
             "--tools",
             "read,write,edit,bash,grep,find,ls",
         ]
+        provider = worker.env.get("PI_PROVIDER")
+        model = worker.env.get("PI_MODEL")
+        if bool(provider) != bool(model):
+            raise ValueError("Local Pi requires both PI_PROVIDER and PI_MODEL")
+        if provider and model:
+            pi_argv.extend(["--provider", provider, "--model", model])
         if session:
             pi_argv.extend(["--session", session])
         pi_argv.extend(["-p", prompt])
