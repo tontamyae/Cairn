@@ -4,3 +4,10 @@ __pycache__/
 .playwright-cli/
 datas/
 dispatch.yaml
+
+# backups, logs, generated artifacts
+*.bak
+*.bak-*
+*.log
+bin/
+openapi.json
